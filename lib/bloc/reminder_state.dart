@@ -10,12 +10,12 @@ class ReminderLoadingState extends ReminderState {
 }
 
 class ReminderLoadedState extends ReminderState {
-  final String reminderMessage;
-  final String date;
-  final String time;
+  final String status;
+  final String message;
+  final List<Datas> data;
 
-  ReminderLoadedState(this.reminderMessage, this.date, this.time);
+  ReminderLoadedState(this.status, this.message, this.data);
 
   @override
-  List<Object?> get props => [reminderMessage, date, time];
+  List<Object?> get props => [status, message, data];
 }

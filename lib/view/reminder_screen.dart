@@ -48,39 +48,55 @@ class ReminderScreen extends StatelessWidget {
               );
             }
             if (state is ReminderLoadedState) {
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      state.reminderMessage,
-                      style: TextStyle(
-                        fontSize: 24,
+              return ListView.builder(
+                itemCount: state.data.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        state.data[index].alertText,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Text(state.data[index].reminderDate.toString()),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(state.data[index].reminderTime),
+                        ],
+                      ),
+                      trailing:
+                          //list if widget in appbar actions
+                          PopupMenuButton(
+                        icon: const Icon(Icons
+                            .menu_rounded), //don't specify icon if you want 3 dot menu
+                        color: Colors.white,
+                        itemBuilder: (context) => [
+                          PopupMenuItem<int>(
+                            value: 0,
+                            child: const Text(
+                              "Edit",
+                              style: TextStyle(color: Colors.greenAccent),
+                            ),
+                            onTap: () {},
+                          ),
+                          const PopupMenuItem<int>(
+                            value: 1,
+                            child: Text(
+                              "Delete",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                        // ignore: avoid_print
+                        onSelected: (item) => {print(item)},
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(
-                          state.date,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          state.time,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  );
+                },
               );
             }
             return Container();
